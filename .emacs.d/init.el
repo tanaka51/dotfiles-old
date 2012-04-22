@@ -26,10 +26,6 @@
 (set-language-environment 'Japanese)
 (prefer-coding-system 'utf-8)
 
-;; フォント設定
-;; (set-face-font 'default "Ricty-14")
-;; (set-default-font "Ricty-14")
-
 ;; フォント設定方法2 by igaiga
 ;; フレームのフォントを設定
 (let* ((size 13) ; ASCIIフォントのサイズ [9/10/12/14/15/17/19/20/...]
@@ -198,20 +194,9 @@
 (require 'auto-complete-config)
 (global-auto-complete-mode 1)
 
-;; tempbuf 93
-;; 自動的にバッファ殺されるとかうざすぎる事に気付いたので削除
-;; (require 'tempbuf)
-;; (add-hook 'find-file-hooks 'turn-on-tempbuf-mode)
-;; (add-hook 'dired-mode-hook 'turn-on-tempbuf-mode)
-
 ;; popwin
 (require 'popwin)
 (setq display-buffer-function 'popwin:display-buffer)
-
-
-;;;;
-;;;; setting for manual installed elisp
-;;;;
 
 ;; php-mode
 (require 'php-mode)
@@ -232,61 +217,6 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;; rails 環境でうまく動かないから却下
-;; flymake for ruby
-;; (require 'flymake)
-;; ;; Invoke ruby with '-c' to get syntax checking
-;; (defun flymake-ruby-init ()
-;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-;;                        'flymake-create-temp-inplace))
-;;          (local-file  (file-relative-name
-;;                        temp-file
-;;                        (file-name-directory buffer-file-name))))
-;;     (list "ruby" (list "-c" local-file))))
-;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
-;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
-;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
-;; (add-hook
-;;  'ruby-mode-hook
-;;  '(lambda ()
-;;     ;; Don't want flymake mode for ruby regions in rhtml files
-;;     (if (not (null buffer-file-name)) (flymake-mode))
-;;     ;; エラー行で C-c d するとエラーの内容をミニバッファで表示する
-;;     (define-key ruby-mode-map "\C-cd" 'credmp/flymake-display-err-minibuf)))
-
-;; (defun credmp/flymake-display-err-minibuf ()
-;;   "Displays the error/warning for the current line in the minibuffer"
-;;   (interactive)
-;;   (let* ((line-no             (flymake-current-line-no))
-;;          (line-err-info-list  (nth 0 (flymake-find-err-info flymake-err-info line-no)))
-;;          (count               (length line-err-info-list))
-;;          )
-;;     (while (> count 0)
-;;       (when line-err-info-list
-;;         (let* ((file       (flymake-ler-file (nth (1- count) line-err-info-list)))
-;;                (full-file  (flymake-ler-full-file (nth (1- count) line-err-info-list)))
-;;                (text (flymake-ler-text (nth (1- count) line-err-info-list)))
-;;                (line       (flymake-ler-line (nth (1- count) line-err-info-list))))
-;;           (message "[%s] %s" line text)
-;;           )
-;;         )
-;;       (setq count (1- count)))))
-
-;; RSense
-;; (setq rsense-home "/Users/koichi/opt/rsense-0.3")
-;; (add-to-list 'load-path (concat rsense-home "/etc"))
-;; (require 'rsense)
-
-;; .で補完 (auto-completeに依存)
-;; (add-hook 'ruby-mode-hook
-;;           (lambda ()
-;;             (local-set-key (kbd "C-c .") 'rsense-jump-to-definition)
-;;             (add-to-list 'ac-sources 'ac-source-rsense-method)
-;;             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
-
-
-;; org-mode
-
 ;; org-remember
 (global-set-key (kbd "C-.") 'org-remember)
 (require 'org)
@@ -304,6 +234,9 @@
 (require 'slime)
 (slime-setup '(slime-repl slime-fancy slime-banner))
 (setq slime-net-coding-system 'utf-8-unix)
+
+
+;;; popwin 設定
 
 ;; Apropos
 (push '("*slime-apropos*") popwin:special-display-config)
@@ -368,22 +301,16 @@
 ;; anything
 (require 'anything-startup)
 (require 'anything-migemo)
-
-(global-set-key (kbd "C-@") 'anything)
-
+(global-set-key (kbd "C-@") 'anything)  ; もっと良い場所があったら変えたい
 
 
 ;; rst.el
-;; Emacs起動時にrst.elを読み込み
 (require 'rst)
-;; 拡張子の*.rst, *.restのファイルをrst-modeで開く
 (setq auto-mode-alist
       (append '(("\\.rst$" . rst-mode)
                 ("\\.rest$" . rst-mode)) auto-mode-alist))
 ;; 背景が黒い場合はこうしないと見出しが見づらい
 (setq frame-background-mode 'dark)
-;; 全部スペースでインデントしましょう
-(add-hook 'rst-mode-hook '(lambda() (setq indent-tabs-mode nil)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -396,16 +323,12 @@
  '(rst-level-4-face ((t (:foreground "chocolate1"))) t)
  '(rst-level-5-face ((t (:foreground "PaleGreen"))) t)
  '(rst-level-6-face ((t (:foreground "Aquamarine"))) t))
-;; (rst-level-7-face ((t (:foreground "LightSteelBlue"))) t)  ;; メモ
-;; (rst-level-8-face ((t (:foreground "LightSalmon"))) t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(rst-level-face-base-light 50))
-
-
 
 
 ;; ;; scss-mode
@@ -441,7 +364,6 @@
     (end-of-line))
   (require 'ruby-electric)
   (ruby-electric-mode t))
-
 
 ;; markdown-mode
 (autoload 'markdown-mode "markdown-mode.el"

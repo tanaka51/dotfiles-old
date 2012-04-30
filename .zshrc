@@ -135,6 +135,8 @@ alias gm='git merge'
 alias gpr='git pull --rebase'
 alias gg='git grep -n -i -I --color'
 alias gcom='git checkout master'
+alias gd='g diff'
+alias gdc='g diff --cached'
 
 alias r='rails'
 alias be='bundle exec'

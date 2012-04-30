@@ -146,6 +146,8 @@ alias ec='emacsclient'
 
 if [ `uname` = "Darwin" ]; then
     export PATH="$PATH:/opt/local/bin:/opt/local/sbin/"
+    # for Ruby on Android
+    export PATH="$PATH://Applications/android-sdk-macosx/platform-tools:/Applications/android-sdk-macosx/tools"
     export MANPATH="/opt/local/man:$MANPATH"
     export LANG=ja_JP.UTF-8
     export CC="/opt/local/bin/gcc-apple-4.2"

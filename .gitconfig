@@ -15,7 +15,14 @@
 [color]
 	ui = auto
 [alias]
+	c = commit
 	co = checkout
+	a = add
+	st = status
 	b = branch
+	ba = branch -a
+	lg = log
+	lgg = log --graph
 	d = diff
-	cob = checkout -b
+	tree = log --pretty=oneline --decorate --graph
+	treeall = log --pretty=oneline --decorate --graph --all

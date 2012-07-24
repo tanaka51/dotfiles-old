@@ -127,6 +127,7 @@ alias g='git'
 compdef g=git
 alias gst='git status'
 alias gc='git commit'
+alias gcm='git commit -m'
 alias gco='git checkout'
 alias gb='git branch'
 alias glg='git log --stat --max-count=5'

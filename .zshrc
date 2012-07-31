@@ -137,6 +137,7 @@ alias gg='git grep -n -i -I --color'
 alias gcom='git checkout master'
 alias gd='g diff'
 alias gdc='g diff --cached'
+alias gcm='gc -m'
 
 alias r='rails'
 alias be='bundle exec'

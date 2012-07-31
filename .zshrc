@@ -154,6 +154,8 @@ if [ `uname` = "Darwin" ]; then
     export MANPATH="/opt/local/man:$MANPATH"
     export LANG=ja_JP.UTF-8
     export CC="/opt/local/bin/gcc-apple-4.2"
+    # for psql installed from macports
+    export PATH=/opt/local/lib/postgresql83/bin:$PATH
     [[ -s "/Users/koichi/.rvm/scripts/rvm" ]] && source "/Users/koichi/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 fi
 

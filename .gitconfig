@@ -26,3 +26,4 @@
 	d = diff
 	tree = log --pretty=oneline --decorate --graph
 	treeall = log --pretty=oneline --decorate --graph --all
+  ta = log --pretty=oneline --decorate --graph --all

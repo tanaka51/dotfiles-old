@@ -12,68 +12,40 @@ autoload colors
 colors
 GIT_PS1_SHOWDIRTYSTATE=1
 setopt prompt_subst
-PROMPT='`whoami`%{$fg[cyan]%}%#%{$reset_color%} '
-RPROMPT='[%{$fg[white]%}%(8~,%-1~/.../%1~,%~)%{$reset_color%}%{$fg[green]%}$(__git_ps1 " %s")%{$reset_color%} %{$fg[red]%}$(rvm_prompt)%{${reset_color}%}]'
-if [[ -r /proc/loadavg ]]; then
-    PROMPT='%{$(load_avg)%}%{$reset_color%}'$PROMPT
-else
-    PROMPT=''$PROMPT
-fi
+PROMPT='`whoami`%{$fg[cyan]%}$%{$reset_color%} '
+RPROMPT='[%{$fg[white]%}%(8~,%-1~/.../%1~,%~)%{$reset_color%}%{$fg[green]%}$(__git_ps1 " %s")%{$reset_color%}]'
 
-## コアダンプサイズを制限
-limit coredumpsize 102400
-## 出力の文字列末尾に改行コードが無い場合でも表示
-unsetopt promptcr
-## ビープを鳴らさない
-setopt nobeep
-## 内部コマンド jobs の出力をデフォルトで jobs -l にする
-setopt long_list_jobs
-## 補完候補一覧でファイルの種別をマーク表示
-setopt list_types
-## サスペンド中のプロセスと同じコマンド名を実行した場合はリジューム
-setopt auto_resume
-## 補完候補を一覧表示
-setopt auto_list
-## 補完候補を詰めて表示
-setopt list_packed
-## 直前と同じコマンドをヒストリに追加しない
-setopt hist_ignore_dups
-## cd 時に自動で push
-setopt autopushd
-## 同じディレクトリを pushd しない
-setopt pushd_ignore_dups
-## TAB で順に補完候補を切り替える
-setopt auto_menu
-## zsh の開始, 終了時刻をヒストリファイルに書き込む
-setopt extended_history
-## =command を command のパス名に展開する
-setopt equals
-## ヒストリを呼び出してから実行する間に一旦編集
-setopt hist_verify
-## 出力時8ビットを通す
-setopt print_eight_bit
-## ヒストリを共有
-setopt share_history
-## 補完時に大小文字を区別しない
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-## 補完候補のカーソル選択を有効に
-zstyle ':completion:*' menu select=1
+unsetopt promptcr     # 出力の文字列末尾に改行コードが無い場合でも表示
+
+setopt nobeep         # ビープを鳴らさない
+setopt long_list_jobs # 内部コマンド jobs の出力をデフォルトで jobs -l にする
+setopt list_types     # 補完候補一覧でファイルの種別をマーク表示
+setopt auto_resume    # サスペンド中のプロセスと同じコマンド名を実行した場合はリジューム
+setopt auto_list      # 補完候補を一覧表示
+setopt list_packed    # 補完候補を詰めて表示
+setopt hist_ignore_dups     # 直前と同じコマンドをヒストリに追加しない
+setopt autopushd            # cd 時に自動で push
+setopt pushd_ignore_dups    # 同じディレクトリを pushd しない
+setopt auto_menu            # TAB で順に補完候補を切り替える
+setopt extended_history     # zsh の開始, 終了時刻をヒストリファイルに書き込む
+setopt equals               # =command を command のパス名に展開する
+setopt hist_verify          # ヒストリを呼び出してから実行する間に一旦編集
+setopt print_eight_bit      # 出力時8ビットを通す
+setopt share_history        # ヒストリを共有
+setopt auto_cd              # ディレクトリ名だけで cd
+setopt auto_param_keys      # カッコの対応などを自動的に補完
+setopt auto_param_slash     # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+setopt correct              # スペルチェック
+setopt complete_aliases     # エイリアス
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # ## 補完時に大小文字を区別しない
+zstyle ':completion:*' menu select=1                      # ## 補完候補のカーソル選択を有効に
+
 ## 補完候補の色づけ
 export LSCOLORS=ExFxCxdxBxegedabagacad
 export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-## ディレクトリ名だけで cd
-setopt auto_cd
-## カッコの対応などを自動的に補完
-setopt auto_param_keys
-## ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
-setopt auto_param_slash
-## スペルチェック
-setopt correct
-## エイリアス
-setopt complete_aliases
 
 ## 補完方法の設定。指定した順番に実行する。
 ### _oldlist 前回の補完結果を再利用する。
@@ -84,7 +56,7 @@ setopt complete_aliases
 ### _approximate: 似ている補完候補も補完候補とする。
 ### _prefix: カーソル以降を無視してカーソル位置までで補完する。
 zstyle ':completion:*' completer \
-    _oldlist _complete _match _history _ignored _approximate _prefix
+    _complete _match _ignored _approximate _prefix
 ## 補完候補をキャッシュする。
 zstyle ':completion:*' use-cache yes
 ## 詳細な情報を使う。
@@ -92,16 +64,11 @@ zstyle ':completion:*' verbose yes
 ## sudo時にはsudo用のパスも使う。
 zstyle ':completion:sudo:*' environ PATH="$SUDO_PATH:$PATH"
 
-## カーソル位置で補完する。
-setopt complete_in_word
-## globを展開しないで候補の一覧から補完する。
-setopt glob_complete
-## 補完時にヒストリを自動的に展開する。
-setopt hist_expand
-## 補完候補がないときなどにビープ音を鳴らさない。
-setopt no_beep
-## 辞書順ではなく数字順に並べる。
-setopt numeric_glob_sort
+setopt complete_in_word  # カーソル位置で補完する。
+setopt glob_complete     # globを展開しないで候補の一覧から補完する。
+setopt hist_expand       # 補完時にヒストリを自動的に展開する。
+setopt no_beep           # 補完候補がないときなどにビープ音を鳴らさない。
+setopt numeric_glob_sort # 辞書順ではなく数字順に並べる。
 
 
 # 展開
@@ -113,6 +80,15 @@ setopt magic_equal_subst
 setopt extended_glob
 ## globでパスを生成したときに、パスがディレクトリだったら最後に「/」をつける。
 setopt mark_dirs
+
+# 単語の区切り文字を指定する
+autoload -Uz select-word-style
+select-word-style default
+# ここで指定した文字は単語区切りとみなされる
+# / も区切りと扱うので、^W でディレクトリ１つ分を削除できる
+zstyle ':zle:*' word-chars " /=;@:{},|_-"
+zstyle ':zle:*' word-style unspecified
+
 
 source ~/dotfiles/.git-completion.sh
 
@@ -146,25 +122,26 @@ alias ber='bundle exec rails'
 
 alias reload='source ~/.zshrc'
 
-alias ec='emacsclient'
+alias vagstart='vagrant up && vagrant ssh'
 
-if [ `uname` = "Darwin" ]; then
-    export PATH="$PATH:/opt/local/bin:/opt/local/sbin/"
-    # for Ruby on Android
-    export PATH="$PATH://Applications/android-sdk-macosx/platform-tools:/Applications/android-sdk-macosx/tools"
-    export MANPATH="/opt/local/man:$MANPATH"
-    export LANG=ja_JP.UTF-8
-    export CC="/opt/local/bin/gcc-apple-4.2"
-    # for psql installed from macports
-    export PATH=/opt/local/lib/postgresql83/bin:$PATH
-    [[ -s "/Users/koichi/.rvm/scripts/rvm" ]] && source "/Users/koichi/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+alias e='emacsclient -t'
+if pgrep emacs >/dev/null 2>&1; then
+  echo "Emacs server is already running..."
+else
+  `emacs --daemon`
 fi
 
-function rvm_prompt {
-    result=`rvm-prompt v g 2> /dev/null`
-    if [ "$result" ] ; then
-echo "$result"
-    fi
-}
+if [ -d "$HOME/.rbenv" ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+if [ `uname` = "Darwin" ]; then
+  export PATH="$PATH://Applications/android-sdk-macosx/platform-tools:/Applications/android-sdk-macosx/tools"
+  export PATH="$PATH:/usr/local/share/npm/bin"
+  export PATH="$PATH:$HOME/bin"
+  export PATH="/usr/local/bin:$PATH"
+  export JAVA_HOME=/Library/Java/Home
+  export CATALINA_HOME=/usr/local/tomcat
+  alias ff='/Applications/Firefox.app/Contents/MacOS/firefox'
+fi

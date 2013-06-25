@@ -90,7 +90,7 @@ zstyle ':zle:*' word-chars " /=;@:{},|_-"
 zstyle ':zle:*' word-style unspecified
 
 
-source ~/dotfiles/.git-completion.sh
+source ~/bin/.git-completion.sh
 
 alias ls='ls -G'
 alias la="ls -G -a"

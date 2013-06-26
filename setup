@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'; include FileUtils
+
+home_path = Dir.home
+current_path = File.expand_path(File.dirname(__FILE__))
+
+black_list = %w!. .. .git!
+options = {verbose: true}
+
+mkdir_p File.join(home_path, 'bin'), options
+cd(File.join(current_path, 'bin'), options) do
+  (Dir[".*"] - black_list).each do |name|
+    cp name, File.join(home_path, 'bin'), options
+  end
+end
+
+cd(current_path, options) do |cur_dir|
+  (Dir[".*"] - black_list).each do |name|
+    ln_s File.join(cur_dir, name), home_path, options
+  end
+end
+
+# vim:filetype=ruby
+

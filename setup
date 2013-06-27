@@ -5,9 +5,27 @@ require 'fileutils'; include FileUtils
 home_path = Dir.home
 current_path = File.expand_path(File.dirname(__FILE__))
 
-black_list = %w!. .. .git!
+black_list = %w!. .. .git .gitignore!
 options = {verbose: true}
 
+puts "##############################################"
+puts "##                                          ##"
+puts "##                                          ##"
+puts "##                                          ##"
+puts "##                                          ##"
+puts "##           SETUP DOTFILES!!!!             ##"
+puts "##                                          ##"
+puts "##                                          ##"
+puts "##                      created by tanaka51 ##"
+puts "##                                          ##"
+puts "##############################################"
+puts ""
+puts ""
+puts ""
+puts "##------------------------------------------##"
+puts "## Copy bin/ to $HOME"
+puts "##------------------------------------------##"
+puts ""
 mkdir_p File.join(home_path, 'bin'), options
 cd(File.join(current_path, 'bin'), options) do
   (Dir[".*"] - black_list).each do |name|
@@ -15,6 +33,11 @@ cd(File.join(current_path, 'bin'), options) do
   end
 end
 
+puts ""
+puts "##------------------------------------------##"
+puts "## Create .tmux.conf"
+puts "##------------------------------------------##"
+puts ""
 loop = true
 color = nil
 while(loop) do
@@ -32,9 +55,19 @@ cd(File.join(current_path, "support"), options) do
   system command
 end
 
+puts ""
+puts "##------------------------------------------##"
+puts "## Create symlinks to $HOME"
+puts "##------------------------------------------##"
+puts ""
 cd(current_path, options) do |cur_dir|
   (Dir[".*"] - black_list).each do |name|
-    ln_s File.join(cur_dir, name), home_path, options
+    target = File.join(cur_dir, name)
+    if File.exists? target
+      puts "skip: #{target} exists"
+    else
+      ln_s target, home_path, options
+    end
   end
 end
 

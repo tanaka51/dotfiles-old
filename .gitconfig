@@ -2,7 +2,7 @@
 	name = Koichi Tanaka
 	email = k.tanaka@everyleaf.com
 [core]
-	excludesfile = /Users/koichi/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"

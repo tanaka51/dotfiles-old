@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'ostruct'
+
+options = {}
+options[:color] = "cyan"
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: tmux_conf_creater [options]"
+
+  opts.on('-c', '--color [COLOR]',
+          'Set color that is used to display in tmux session',
+          'default: "cyan"') do |v|
+    options[:color] = v
+  end
+end.parse!
+
+open("../.tmux.conf", "w") do |output|
+  open("../tmux.conf") do |file|
+    file.each do |line|
+      line = line.gsub(/\[COLOR\]/, options[:color])
+      output.write line
+    end
+  end
+end

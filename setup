@@ -15,6 +15,23 @@ cd(File.join(current_path, 'bin'), options) do
   end
 end
 
+loop = true
+color = nil
+while(loop) do
+  puts "Choose tmux color from below."
+  puts "  black red blue green yellow oblue magenta [cyan] white"
+  print "choose: "
+  color = gets.chomp
+  color = "cyan" if color.empty?
+  loop = !(%w!black red blue green yellow blue magenta cyan white!.include?(color))
+end
+
+cd(File.join(current_path, "support"), options) do
+  command = "ruby tmux_conf_creater -c #{color}"
+  puts "exec: " + command
+  system command
+end
+
 cd(current_path, options) do |cur_dir|
   (Dir[".*"] - black_list).each do |name|
     ln_s File.join(cur_dir, name), home_path, options

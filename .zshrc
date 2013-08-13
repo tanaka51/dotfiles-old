@@ -127,6 +127,8 @@ alias vagstart='vagrant up && vagrant ssh'
 alias e='emacsclient -t'
 if pgrep emacs >/dev/null 2>&1; then
   echo "Emacs server is already running..."
+elif pgrep Emacs >/dev/null 2>&1; then
+  echo "Emacs server is already running..."
 else
   `emacs --daemon`
 fi

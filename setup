@@ -50,7 +50,7 @@ while(loop) do
 end
 
 cd(File.join(current_path, "support"), options) do
-  command = "ruby tmux_conf_creater -c #{color}"
+  command = "ruby tmux_conf_creator -c #{color}"
   puts "exec: " + command
   system command
 end

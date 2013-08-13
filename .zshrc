@@ -133,11 +133,6 @@ else
   `emacs --daemon`
 fi
 
-if [ -d "$HOME/.rbenv" ]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-fi
-
 if [ `uname` = "Darwin" ]; then
   export PATH="$PATH://Applications/android-sdk-macosx/platform-tools:/Applications/android-sdk-macosx/tools"
   export PATH="$PATH:/usr/local/share/npm/bin"
@@ -146,4 +141,9 @@ if [ `uname` = "Darwin" ]; then
   export JAVA_HOME=/Library/Java/Home
   export CATALINA_HOME=/usr/local/tomcat
   alias ff='/Applications/Firefox.app/Contents/MacOS/firefox'
+fi
+
+if [ -d "$HOME/.rbenv" ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
 fi

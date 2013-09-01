@@ -33,6 +33,12 @@ cd(File.join(current_path, 'bin'), options) do
   end
 end
 
+puts "##------------------------------------------##"
+puts "## Copy .zsh/ to $HOME"
+puts "##------------------------------------------##"
+puts ""
+mkdir_p File.join(home_path, '.zsh'), options
+
 puts ""
 puts "##------------------------------------------##"
 puts "## Create .tmux.conf"

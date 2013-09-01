@@ -131,14 +131,8 @@ else
   `emacs --daemon`
 fi
 
-if [ `uname` = "Darwin" ]; then
-  export PATH="$PATH://Applications/android-sdk-macosx/platform-tools:/Applications/android-sdk-macosx/tools"
-  export PATH="$PATH:/usr/local/share/npm/bin"
-  export PATH="$PATH:$HOME/bin"
-  export PATH="/usr/local/bin:$PATH"
-  export JAVA_HOME=/Library/Java/Home
-  export CATALINA_HOME=/usr/local/tomcat
-  alias ff='/Applications/Firefox.app/Contents/MacOS/firefox'
+if [ -e "$HOME/.zsh/environment" ]; then
+  source "$HOME/.zsh/environment"
 fi
 
 if [ -d "$HOME/.rbenv" ]; then

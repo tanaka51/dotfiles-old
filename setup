@@ -69,7 +69,7 @@ puts ""
 cd(current_path, options) do |cur_dir|
   (Dir[".*"] - black_list).each do |name|
     target = File.join(cur_dir, name)
-    if File.exists? target
+    if File.exists? File.join(home_path, name)
       puts "skip: #{target} exists"
     else
       ln_s target, home_path, options
